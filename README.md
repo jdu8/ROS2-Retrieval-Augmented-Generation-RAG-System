@@ -55,7 +55,9 @@ RAG_AI/
 ├── docker/                 # Docker configuration
 
 └── tests/                  # Unit tests
+
 --------------------------------------------------------------------------------------------------------------------------------------
+
 ### Key Components
 #### ETL Pipeline
 
@@ -86,33 +88,19 @@ Combines retrieved documents with queries
 
 #### Installation
 1. Clone the repository:
-  git clone https://github.com/RiyamPatel2001/CSGY-6613_Project_RAG.git
-  cd CSGY-6613_Project_RAG
-2  Set up environment variables:
-   cp .env.example .env
-   Edit .env with your configurations (We haven't erased our .env files, so kindly keep it in mind)
-3 Build and run with Docker:
-  docker-compose up --build
+      git clone https://github.com/RiyamPatel2001/CSGY-6613_Project_RAG.git
+      cd CSGY-6613_Project_RAG
+2. Set up environment variables:
+      cp .env.example .env
+      Edit .env with your configurations (We haven't erased our .env files, so kindly keep it in mind)
+3. Build and run with Docker:
+      docker-compose up --build
 
 #### Usage
 Web Interface
   1. Access the Gradio interface at http://localhost:8000
   2. Choose between predefined questions or enter custom queries
 
-
-
-#### API Access
-  import requests
-  
-  response = requests.post
-  (
-  
-     "http://localhost:8000/api/query",
-      
-      json={
-          "question": "How to implement navigation in ROS2?",
-          
-          "model": "ollama"  # or "huggingface"} )
 --------------------------------------------------------------------------------------------------------------------------------------
 
 ### Key Concepts:
