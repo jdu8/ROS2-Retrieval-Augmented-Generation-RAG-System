@@ -1,0 +1,169 @@
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
+# Complete docker-compose.yml
+
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - CUDA_VISIBLE_DEVICES=0
+      - MONGODB_URI=mongodb://mongodb:27017
+      - QDRANT_HOST=qdrant
+      - HF_TOKEN=${HF_TOKEN}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - CLEARML_API_HOST=https://api.clear.ml
+      - CLEARML_WEB_HOST=https://app.clear.ml
+      - CLEARML_FILES_HOST=https://files.clear.ml
+      - CLEARML_API_ACCESS_KEY=${CLEARML_API_ACCESS_KEY}
+      - CLEARML_API_SECRET_KEY=${CLEARML_API_SECRET_KEY}
+    ports:
+      - "8000:8000"  # Gradio interface
+      - "11434:11434"  # Ollama API
+    volumes:
+      - ./app:/app
+      - ollama_data:/root/.ollama
+      - ./clearml.conf:/root/.clearml/config.conf
+    depends_on:
+      - mongodb
+      - qdrant
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+volumes:
+  mongodb_data:
+  qdrant_data:
+  ollama_data:
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------
+# With NVIDIA-GPU support
+
+# version: '3.8'
+
+# services:
+#   app:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     platform: linux/amd64
+#     privileged: true
+#     runtime: nvidia
+#     environment:
+#       - NVIDIA_VISIBLE_DEVICES=all
+#       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+#       - CUDA_VISIBLE_DEVICES=0
+#       - MONGODB_URI=mongodb://mongodb:27017
+#       - QDRANT_HOST=qdrant
+#       - HF_TOKEN=${HF_TOKEN}
+#       - GITHUB_TOKEN=${GITHUB_TOKEN}
+#     deploy:
+#       resources:
+#         reservations:
+#           devices:
+#             - driver: nvidia
+#               count: 1
+#               capabilities: [gpu]
+#     ports:
+#       - "8000:8000"
+#       - "11434:11434"  # Expose Ollama port
+#     volumes:
+#       - ./app:/app
+#       - ollama_data:/root/.ollama  # Persist Ollama data
+#     depends_on:
+#       - mongodb
+#       - qdrant
+
+#   mongodb:
+#     image: mongo:latest
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - mongodb_data:/data/db
+
+#   qdrant:
+#     image: qdrant/qdrant:latest
+#     ports:
+#       - "6333:6333"
+#     volumes:
+#       - qdrant_data:/qdrant/storage
+
+# volumes:
+#   mongodb_data:
+#   qdrant_data:
+#   ollama_data:
+
+
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Without NVIDIA-GPU support
+
+# version: '3.8'
+
+# services:
+#   app:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     platform: linux/amd64
+#     privileged: true
+#     ports:
+#       - "8000:8000"
+#     volumes:
+#       - ./app:/app
+#     environment:
+#       - MONGODB_URI=mongodb://mongodb:27017
+#       - QDRANT_HOST=qdrant
+#       - HF_TOKEN=${HF_TOKEN}
+#       - GITHUB_TOKEN=${GITHUB_TOKEN}
+#       - PYTHONUNBUFFERED=1
+#       - PYTHONFAULTHANDLER=1
+#     deploy:
+#       resources:
+#         limits:
+#           memory: 8G
+#         reservations:
+#           memory: 2G
+#     depends_on:
+#       - mongodb
+#       - qdrant
+
+#   mongodb:
+#     image: mongo:latest
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - mongodb_data:/data/db
+
+#   qdrant:
+#     image: qdrant/qdrant:latest
+#     ports:
+#       - "6333:6333"
+#     volumes:
+#       - qdrant_data:/qdrant/storage
+
+# volumes:
+#   mongodb_data:
+#   qdrant_data:
