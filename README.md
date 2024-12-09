@@ -12,12 +12,14 @@ Features
 GitHub Repository Crawling
 
 Repositroy Used:
+
            1. 'ros2/ros2_documentation',
            2. 'ros-planning/navigation2',
            3. 'ros2/ros2',
            4. 'ros2/demos'
            
 YouTube Tutorial Transcript Processing:
+
            1. 'https://www.youtube.com/watch?v=Gg25GfA456o&t=24s'
            
 MongoDB for Raw Data Storage
