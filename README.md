@@ -93,8 +93,11 @@ Combines retrieved documents with queries
 
 #### Setup and Installation
 ##### Prerequisites
+
   Docker and Docker Compose
+
   NVIDIA GPU (recommended)
+  
   HuggingFace Account (for fine-tuned model)
 
 #### Installation
