@@ -42,11 +42,11 @@ RAG_AI/
 
 ├── app/
 
-│   ├── api/                 # API endpoints
+│   ├── api/                # API endpoints
 
-│   ├── etl/                 # Data extraction and processing
+│   ├── etl/                # Data extraction and processing
 
-│   ├── featurization/       # Vector embeddings and search
+│   ├── featurization/      # Vector embeddings and search
 
 │   ├── models/             # LLM handlers
 
@@ -54,7 +54,7 @@ RAG_AI/
 
 ├── docker/                 # Docker configuration
 
-└── tests/                 # Unit tests
+└── tests/                  # Unit tests
 --------------------------------------------------------------------------------------------------------------------------------------
 ### Key Components
 #### ETL Pipeline
